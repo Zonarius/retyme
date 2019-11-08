@@ -7,9 +7,9 @@ export interface VersionResponse {
   databaseVersion: string;
 }
 
-export default ((req, res) => {
+export const handleVersion: RequestHandler = (req, res) => {
   res.send(version())
-}) as RequestHandler;
+};
 
 function version(): VersionResponse {
   return {

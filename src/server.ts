@@ -5,9 +5,10 @@ const app = express();
 const validVersions = ['v1', 'v2'];
 
 app.use((req, res, next) => {
-  console.log(req.path);
+  console.log(`${req.method} ${req.path}`);
   next();
 })
+
 app.use(`/api/:version`, (req, res, next) => {
   if (!validVersions.includes(req.params.version)) {
     return res.sendStatus(404);

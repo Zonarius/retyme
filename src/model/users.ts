@@ -1,5 +1,11 @@
 import { MeshEntity, GroupReference, CommonPermissions } from "./common";
 
+export interface DbUser extends MeshEntity {
+  username: string;
+  enabled: boolean;
+  forcedPasswordChange: boolean;
+}
+
 export interface UserResponse extends MeshEntity {
   username: string;
   enabled: boolean;

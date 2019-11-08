@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "redis": "docker run -d redis:5-alpine",
+    "redis": "docker run --rm -d -p 6379:6379 redis:5-alpine",
     "watch": "nodemon"
   },
   "keywords": [],
@@ -11,7 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.2",
+    "@types/node": "^12.12.6",
     "@types/redis": "^2.8.14",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "nodemon": "^1.19.4",
     "redis": "^2.8.0",

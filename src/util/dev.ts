@@ -37,3 +37,14 @@ export function emptyPage<T>(): Page<T> {
     }
   }
 }
+
+export function fullPage<T>(items: T[]): Page<T> {
+  return {
+    data: items,
+    _metainfo: {
+      currentPage: 1,
+      pageCount: 1,
+      totalCount: items.length
+    }
+  }
+}

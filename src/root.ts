@@ -1,4 +1,8 @@
-import { RequestHandler } from "express";
+import { Router } from "express";
+
+export const rootRouter = Router();
+
+rootRouter.get('/', (req, res) => res.send(version()))
 
 export interface VersionResponse {
   meshVersion: string;
@@ -6,10 +10,6 @@ export interface VersionResponse {
   databaseVendor: "redis";
   databaseVersion: string;
 }
-
-export const handleVersion: RequestHandler = (req, res) => {
-  res.send(version())
-};
 
 function version(): VersionResponse {
   return {

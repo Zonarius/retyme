@@ -1,8 +1,13 @@
 import { Router } from "express";
+import { authRouter } from "./auth/router";
+import { usersRouter } from "./users/userRouter";
 
 export const rootRouter = Router();
 
 rootRouter.get('/', (req, res) => res.send(version()))
+
+rootRouter.use('/auth', authRouter);
+rootRouter.use('/users', usersRouter);
 
 export interface VersionResponse {
   meshVersion: string;

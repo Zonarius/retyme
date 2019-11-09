@@ -1,5 +1,6 @@
 import express from 'express';
 import { rootRouter } from './api/root';
+import { initMesh } from './bootstrap';
 
 const app = express();
 const validVersions = ['v1', 'v2'];
@@ -18,4 +19,7 @@ app.use(`/api/:version`, (req, res, next) => {
 
 app.use(`/api/:version`, rootRouter)
 
-app.listen(8080, () => console.log("Mesh running on port 8080"))
+
+initMesh()
+.then(() => app.listen(8080, () => console.log("Mesh running on port 8080")))
+

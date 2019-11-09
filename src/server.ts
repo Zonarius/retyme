@@ -6,7 +6,15 @@ const app = express();
 const validVersions = ['v1', 'v2'];
 
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
+  const startHrTime = process.hrtime();
+  const path = req.path;
+
+  res.on("finish", () => {
+    const elapsedHrTime = process.hrtime(startHrTime);
+    const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
+    console.log(`${req.method} ${path} ${elapsedTimeInMs}ms`);
+  })
+
   next();
 })
 
@@ -14,6 +22,7 @@ app.use(`/api/:version`, (req, res, next) => {
   if (!validVersions.includes(req.params.version)) {
     return res.sendStatus(404);
   }
+  req.mesh.version = req.params.version;
   next();
 })
 

@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { emptyPage } from "../../util/dev";
 import { createUser, getUsers } from "../../redis/users";
-import { json } from "body-parser";
+import { json } from "express";
 
 export const usersRouter = Router();
 

@@ -1,21 +1,7 @@
 import { Router } from "express";
-import { placeHolderMeshEntity, placeHolderCommonPermissions } from "../../util/dev";
-import { UserResponse } from "../../model/users";
 
 export const authRouter = Router();
 
 authRouter.get('/me', (req, res) => {
-  res.send(me())
+  res.send(req.mesh.requestUser)
 })
-
-function me(): UserResponse {
-  return {
-    ...placeHolderMeshEntity(),
-    username: "anonymous",
-    rolesHash: "someHash",
-    forcedPasswordChange: false,
-    permissions: placeHolderCommonPermissions(),
-    enabled: true,
-    groups: []
-  }
-}

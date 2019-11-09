@@ -1,5 +1,6 @@
 export type UUID = string;
 export type ISODate = string;
+export type EntityTypeName = "users";
 
 export interface HasUuid {
   uuid: UUID;

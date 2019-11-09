@@ -1,9 +1,7 @@
 import * as red from 'redis';
-import { HasUuid, UUID } from '../model/common';
+import { HasUuid, UUID, EntityTypeName } from '../model/common';
 import { promisify } from 'util';
 const client = red.createClient();
-
-export type EntityTypeName = "users";
 
 export namespace redis {
   export const set = promisify(client.set).bind(client);

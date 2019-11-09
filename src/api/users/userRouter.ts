@@ -1,13 +1,3 @@
-import { Router } from "express";
-import { createUser, getUsers } from "../../redis/users";
-import { json } from "express";
+import { entityRouter } from "../../util/routerUtil";
 
-export const usersRouter = Router();
-
-usersRouter.get(`/`, async (req, res) => {
-  res.send(await getUsers());
-})
-
-usersRouter.post(`/`, json(), async (req, res) => {
-  res.send(await createUser(req.body));
-})
+export const usersRouter = entityRouter('users');

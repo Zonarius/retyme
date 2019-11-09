@@ -1,6 +1,6 @@
-import { createUser } from "./redis/users";
 import { randomUuid } from "./util/util";
 import { redis } from "./redis/client";
+import { users } from "./redis/users";
 
 export async function initMesh() {
   if (await alreadyExists()) {
@@ -20,11 +20,11 @@ async function alreadyExists() {
 
 function createUsers() {
   return Promise.all([
-    createUser({
+    users.create({
       username: "admin",
       password: "admin"
     }),
-    createUser({
+    users.create({
       username: "anonymous",
       password: randomUuid()
     })

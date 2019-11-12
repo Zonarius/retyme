@@ -18,7 +18,8 @@ export const users: EntityFunctions<UserModels> = {
       forcedPasswordChange: false,
       ...createBase()
     }
-  
+
+
     await Promise.all([
       redis.setEntity("users", user),
       redis.set(`user.byname:${user.username}`, user.uuid)
@@ -32,6 +33,9 @@ export const users: EntityFunctions<UserModels> = {
   },
   async findByUuid(uuid: UUID) {
     return redis.getEntityByUuid("users", uuid);
+  },
+  async delete() {
+
   }
 }
 

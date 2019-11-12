@@ -1,6 +1,7 @@
 import * as red from 'redis';
 import { HasUuid, UUID, EntityTypeName } from '../model/common';
 import { promisify } from 'util';
+
 const client = red.createClient();
 
 export namespace redis {
@@ -9,6 +10,7 @@ export namespace redis {
   export const hget = promisify(client.hget).bind(client);
   export const hset = promisify(client.hset).bind(client);
   export const hvals = promisify(client.hvals).bind(client);
+  export const multi = client.multi.bind(client);
 
   export function setEntity(type: EntityTypeName, entity: HasUuid) {
     return hset(type, entity.uuid, JSON.stringify(entity));
@@ -16,6 +18,7 @@ export namespace redis {
 
   export async function getEntities(type: EntityTypeName) {
     const vals = await hvals(type)
+    client.multi()
     return vals.map(parse);
   }
 

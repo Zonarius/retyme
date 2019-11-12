@@ -1,7 +1,11 @@
+import * as bcrypt from 'bcrypt';
+
 import { Router } from "express";
 import * as jwt from 'jsonwebtoken';
 import { validateJson } from "../../util/validate";
 import { activeConfig } from "../../config";
+import { getUserByName } from "../../redis/users";
+import { MeshRequest } from "../../util/util";
 
 export const authRouter = Router();
 
@@ -9,9 +13,28 @@ authRouter.get('/me', (req, res) => {
   res.send(req.mesh.requestUser)
 })
 
-authRouter.post(`/login`, validateJson("loginRequest"), (req, res) => {
+interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+authRouter.post(`/login`, validateJson("loginRequest"), async (req: MeshRequest<LoginRequest>, res) => {
+  const user = await getUserByName(req.body.username);
+
+  if (!user) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const matches = await bcrypt.compare(req.body.password, user.password);
+
+  if (!matches) {
+    res.sendStatus(401);
+    return;
+  }
+
   const expiresIn = activeConfig().security.tokenExpirationTime;
-  const token = jwt.sign({ userUuid: "thing" } as object, "somesecret", {
+  const token = jwt.sign({ userUuid: user.uuid } as object, "somesecret", {
     expiresIn: expiresIn
   });
   res.cookie("mesh.token", token, {

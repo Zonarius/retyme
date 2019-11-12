@@ -1,5 +1,10 @@
 import { UUID, HasUuid, HasCreator, HasEditor, ISODate } from "../model/common";
 import { placeHolderUuid } from "./dev";
+import { Request } from "express-serve-static-core";
+
+export interface MeshRequest<T> extends Request {
+  body: T
+}
 
 export function randomUuid(): UUID {
   return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -21,5 +26,15 @@ export function createBase(): HasUuid & HasCreator & HasEditor {
     creator,
     edited: created,
     editor: creator
+  }
+}
+
+export function coalesce<T1, T2>(f1: () => T1, f2: () => T2): T1 | T2 | undefined {
+  var value: any;
+  for (const f of arguments) {
+    value = f();
+    if (value != null) {
+      return value;
+    }
   }
 }

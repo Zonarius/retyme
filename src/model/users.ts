@@ -4,6 +4,7 @@ export interface DbUser extends MeshEntity {
   username: string;
   enabled: boolean;
   forcedPasswordChange: boolean;
+  password: string;
 }
 
 export interface UserResponse extends MeshEntity {

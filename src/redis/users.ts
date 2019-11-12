@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt';
+
 import { redis } from "./client";
 import { CreateUserRequest, DbUser, UserResponse } from "../model/users";
 import { createBase } from "../util/util";
@@ -18,7 +20,6 @@ export const users: EntityFunctions<UserModels> = {
       forcedPasswordChange: false,
       ...createBase()
     }
-
 
     await Promise.all([
       redis.setEntity("users", user),

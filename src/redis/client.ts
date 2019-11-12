@@ -18,7 +18,6 @@ export namespace redis {
 
   export async function getEntities(type: EntityTypeName) {
     const vals = await hvals(type)
-    client.multi()
     return vals.map(parse);
   }
 

@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import * as fs from 'fs-extra';
+import * as path from 'path';
 import { RequestHandler } from 'express-serve-static-core';
 import { json } from 'express';
 
@@ -10,11 +11,12 @@ const parseJson = json();
 
 const schemas = {
   'userCreateRequest': '/user/userCreateRequest.json',
-  'loginRequest': '/auth/loginRequest.json'
+  'loginRequest': '/auth/loginRequest.json',
+  'graphqlRequest': '/graphqlRequest.json'
 }
 
 const loadSchemas = Promise.all(Object.keys(schemas)
-  .map(schemaName => fs.readJSON(`jsonSchema${(schemas as any)[schemaName]}`)
+  .map(schemaName => fs.readJSON(path.join("jsonSchema", (schemas as any)[schemaName]))
   .then(schema => ajv.addSchema(schema, schemaName))))
 
 export function validateJson(jsonSchema: MeshJsonSchema): RequestHandler {

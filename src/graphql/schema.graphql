@@ -1,0 +1,8 @@
+type Query {
+  user(uuid: ID, name: String): User
+}
+
+type User {
+  uuid: ID!
+  username: String!
+}

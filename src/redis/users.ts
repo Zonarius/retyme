@@ -51,6 +51,12 @@ export function toUserResponse(user: DbUser): UserResponse {
   };
 }
 
-export async function getUserByName(name: string): Promise<DbUser | undefined> {
+export async function findUserByName(name: string): Promise<UserResponse | undefined> {
+  const user = await getDbUserByName(name);
+  if (!user) return;
+  return toUserResponse(user);
+}
+
+export async function getDbUserByName(name: string): Promise<DbUser | undefined> {
   return redis.getIndirectEntity("users", `user.byname:${name}`)
 }

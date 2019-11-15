@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import * as jwt from 'jsonwebtoken';
 import { Request } from "express-serve-static-core";
 
-import { getUserByName, toUserResponse, users } from "../redis/users";
+import { getDbUserByName, toUserResponse, users } from "../redis/users";
 import { coalesce } from "../util/util";
 import { UserResponse } from "../model/users";
 
@@ -18,7 +18,7 @@ userHandler.use(cookieParser(), async (req, res, next) => {
   } catch { }
 
   if (!user) {
-    const dbUser = await getUserByName("anonymous");
+    const dbUser = await getDbUserByName("anonymous");
     if (!dbUser) {
       console.error(`Could not find anonymous user`)
       res.sendStatus(500);

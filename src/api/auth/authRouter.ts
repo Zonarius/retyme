@@ -4,7 +4,7 @@ import { Router } from "express";
 import * as jwt from 'jsonwebtoken';
 import { validateJson } from "../../util/validate";
 import { activeConfig } from "../../config";
-import { getUserByName } from "../../redis/users";
+import { getDbUserByName } from "../../redis/users";
 import { MeshRequest } from "../../util/util";
 
 export const authRouter = Router();
@@ -19,7 +19,7 @@ interface LoginRequest {
 }
 
 authRouter.post(`/login`, validateJson("loginRequest"), async (req: MeshRequest<LoginRequest>, res) => {
-  const user = await getUserByName(req.body.username);
+  const user = await getDbUserByName(req.body.username);
 
   if (!user) {
     res.sendStatus(401);

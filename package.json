@@ -26,7 +26,7 @@
     "graphql": "^14.5.8",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.19.4",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2"
   }
